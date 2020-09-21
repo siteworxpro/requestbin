@@ -1,11 +1,10 @@
 import time
-import operator
 
 from ..models import Bin
+import requestbin.config as config
 
-from requestbin import config
 
-class MemoryStorage():
+class MemoryStorage:
     cleanup_interval = config.CLEANUP_INTERVAL
 
     def __init__(self, bin_ttl):
@@ -42,7 +41,8 @@ class MemoryStorage():
     def count_requests(self):
         return self.request_count
 
-    def avg_req_size(self):
+    @staticmethod
+    def avg_req_size():
         return None
 
     def lookup_bin(self, name):

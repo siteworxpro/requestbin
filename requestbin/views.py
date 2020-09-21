@@ -1,7 +1,7 @@
-import urllib
-from flask import session, redirect, url_for, escape, request, render_template, make_response
+from flask import session, request, render_template, make_response
 
 from requestbin import app, db
+
 
 def update_recent_bins(name):
     if 'recent' not in session:
@@ -25,6 +25,7 @@ def expand_recent_bins():
             session['recent'].remove(name)
             session.modified = True
     return recent
+
 
 @app.endpoint('views.home')
 def home():

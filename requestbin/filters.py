@@ -1,9 +1,8 @@
 import datetime
 from dateutil.parser import parse
-import hashlib
-import os
 import time
-import urllib
+import os
+
 
 def approximate_time(ts):
     if not isinstance(ts, (int, long, float, complex)):
@@ -92,7 +91,7 @@ def time_class(secs):
         return "error"
 
     if ms > 1000:
-        return "warning" 
+        return "warning"
 
     return ""
 
@@ -112,7 +111,7 @@ def to_qs(params_dict):
             qs = qs + u"{}={}".format(k, v)
     return qs
 
-    
+
 def short_date(input):
     dt = None
     if isinstance(input, (str, unicode)):

@@ -1,15 +1,13 @@
 from __future__ import absolute_import
 
-import time
-import cPickle as pickle
-
 import redis
 
 from ..models import Bin
 
-from requestbin import config
+import requestbin.config as config
 
-class RedisStorage():
+
+class RedisStorage:
     prefix = config.REDIS_PREFIX
 
     def __init__(self, bin_ttl):

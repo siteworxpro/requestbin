@@ -1,9 +1,10 @@
 import config
-import os
 from cStringIO import StringIO
 
 from flask import Flask
 from flask_cors import CORS
+from werkzeug.contrib.fixers import ProxyFix
+from filters import *
 
 
 class WSGIRawBody(object):
@@ -25,7 +26,8 @@ class WSGIRawBody(object):
         # Return modified response
         return app_iter
 
-    def _sr_callback(self, start_response):
+    @staticmethod
+    def _sr_callback(start_response):
         def callback(status, headers, exc_info=None):
 
             # Call upstream start_response
@@ -33,13 +35,11 @@ class WSGIRawBody(object):
         return callback
 
 
-
 app = Flask(__name__)
 
 if os.environ.get('ENABLE_CORS', config.ENABLE_CORS):
     cors = CORS(app, resources={r"*": {"origins": os.environ.get('CORS_ORIGINS', config.CORS_ORIGINS)}})
 
-from werkzeug.contrib.fixers import ProxyFix
 app.wsgi_app = WSGIRawBody(ProxyFix(app.wsgi_app))
 
 app.debug = config.DEBUG
@@ -53,13 +53,12 @@ if config.BUGSNAG_KEY:
         api_key=config.BUGSNAG_KEY,
         project_root=app.root_path,
         # 'production' is a magic string for bugsnag, rest are arbitrary
-        release_stage = config.REALM.replace("prod", "production"),
+        release_stage=config.REALM.replace("prod", "production"),
         notify_release_stages=["production", "test"],
-        use_ssl = True
+        use_ssl=True
     )
     handle_exceptions(app)
 
-from filters import *
 app.jinja_env.filters['status_class'] = status_class
 app.jinja_env.filters['friendly_time'] = friendly_time
 app.jinja_env.filters['friendly_size'] = friendly_size
@@ -78,7 +77,5 @@ app.add_url_rule('/api/v1/bins/<bin>/requests', 'api.requests', methods=['GET'])
 app.add_url_rule('/api/v1/bins/<bin>/requests/<name>', 'api.request', methods=['GET'])
 
 app.add_url_rule('/api/v1/stats', 'api.stats')
-
-# app.add_url_rule('/robots.txt', redirect_to=url_for('static', filename='robots.txt'))
 
 from requestbin import api, views

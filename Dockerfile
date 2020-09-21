@@ -9,6 +9,9 @@ RUN apk update && apk upgrade && \
         bsd-compat-headers \
         # event.h
         libevent-dev \
+        libffi-dev \
+        file \
+        make \
     && rm -rf /var/cache/apk/*
 
 # want all dependencies first so that if it's just a code change, don't have to

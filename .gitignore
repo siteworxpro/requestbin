@@ -9,3 +9,5 @@ codekit-config.json
 **/.DS_Store
 
 .idea/
+
+venv/

@@ -1,5 +1,5 @@
-from requestbin import config
 import os
+import requestbin.config as config
 
 from requestbin import app
 
