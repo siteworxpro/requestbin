@@ -1,8 +1,7 @@
 version: "3.8"
 services:
     app:
-        build: .
-#        image: siteworxpro/requestbin:latest
+        image: siteworxpro/requestbin:latest
         environment:
             ENABLE_CORS: 1
             REDIS_HOST: "redis"
