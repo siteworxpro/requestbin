@@ -11,3 +11,9 @@ codekit-config.json
 .idea/
 
 venv/
+
+requestbin/static/js/
+
+requestbin/static/js/app.min.js
+requestbin/static/js/app.min.js.map
+node_modules/

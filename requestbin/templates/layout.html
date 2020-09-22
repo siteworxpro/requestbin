@@ -11,57 +11,63 @@
     <script type="text/javascript" src="/static/js/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/prettify.js"></script>
     {% block head %}{% endblock %}
+    <script>
+      window.prettyPrint = prettyPrint
+    </script>
   </head>
-  <body onload="prettyPrint()">
+  <body>
+  <div id="app">
     <div class="header-wrap">
-        <header class="row-fluid">
-            <div class="span12">
-              <h1 class="logo">
-                <a href="/"><img src="/static/img/logo-2x.png" height="38" width="44" /></a>
-                <a href="/"><span class="logo-accent">Request</span>Bin</a>
-              </h1>
-                <nav>
-                    <ul class="nav-menu">
-                        <li>{% block binurl %}{% endblock %}</li>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+      <header class="row-fluid">
+        <div class="span12">
+          <h1 class="logo">
+            <a href="/"><img src="/static/img/logo-2x.png" height="38" width="44" /></a>
+            <a href="/"><span class="logo-accent">Request</span>Bin</a>
+          </h1>
+          <nav>
+            <ul class="nav-menu">
+              <li>{% block binurl %}{% endblock %}</li>
+            </ul>
+          </nav>
+        </div>
+      </header>
     </div>
-
     <div id="content" class="row-fluid">
       {% set width = 12 %}
       {% if recent %} {% set width = 10 %} {% endif %}
       <div class="span{{width}} content-wrap">
-          {% block content %}
-          {% endblock %}
+        {% block content %}
+        {% endblock %}
       </div>
 
       {% if recent %}
-        <div class="span2">
-          {% block sidebar %}
-          <h5><i class="icon-time"></i> History</h5>
-          <ul id="recent">
-            {% for bin in recent %}
-            <li>
-              <a href="/{{bin.name}}?inspect"><i class="icon-circle" style="color: rgb{{bin.color}}"></i></a>
-              <a href="/{{bin.name}}?inspect">{{bin.name}}</a> {% if bin.private %}<i class="icon-lock"></i>{% endif %}
-              ({{bin.request_count}})
+      <div class="span2">
+        {% block sidebar %}
+        <h5><i class="icon-time"></i> History</h5>
+        <ul id="recent">
+          {% for bin in recent %}
+          <li>
+            <a href="/{{bin.name}}?inspect"><i class="icon-circle" style="color: rgb{{bin.color}}"></i></a>
+            <a href="/{{bin.name}}?inspect">{{bin.name}}</a> {% if bin.private %}<i class="icon-lock"></i>{% endif %}
+            ({{bin.request_count}})
 
-            </li>
-            {% else %}
-            <p style="margin-left: -24px; color: gray;">
-              No recent bins.
-            </p>
-            {% endfor %}
-          </ul>
-          {% endblock %}
-        </div>
-        {% endif %}
+          </li>
+          {% else %}
+          <p style="margin-left: -24px; color: gray;">
+            No recent bins.
+          </p>
+          {% endfor %}
+        </ul>
+        {% endblock %}
+      </div>
+      {% endif %}
     </div>
+  </div>
+  {% block script %}
+  {% endblock %}
 
-    {% block script %}
-    {% endblock %}
+
+    <script type="text/javascript" src="/static/js/app.min.js"></script>
 
   </body>
 </html>
