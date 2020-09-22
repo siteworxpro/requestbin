@@ -1,3 +1,11 @@
+FROM node:lts AS node
+ADD package.json .
+ADD webpack.config.js .
+ADD src/ ./src
+
+RUN npm i && npm run build
+RUN ls
+
 FROM python:2.7-alpine
 
 RUN apk update && apk upgrade && \
@@ -23,9 +31,9 @@ RUN pip install -r /opt/requestbin/requirements.txt \
 # the code
 ADD requestbin  /opt/requestbin/requestbin/
 
+COPY --from=0 /requestbin/static  /opt/requestbin/requestbin/static
+
 EXPOSE 8000
 
 WORKDIR /opt/requestbin
 CMD gunicorn -b 0.0.0.0:8000 --worker-class gevent --workers 2 --max-requests 1000 requestbin:app
-
-
