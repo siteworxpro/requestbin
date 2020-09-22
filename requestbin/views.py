@@ -1,6 +1,6 @@
 from flask import session, request, render_template, make_response
-
 from requestbin import app, db
+import requestbin.config as config
 
 
 def update_recent_bins(name):
@@ -44,11 +44,10 @@ def bin(name):
         update_recent_bins(name)
         return render_template('bin.html',
             bin=bin,
-            base_url=request.scheme+'://'+request.host)
+            base_url=config.ROOT_URL)
     else:
         db.create_request(bin, request)
         resp = make_response("ok\n")
-        resp.headers['Sponsored-By'] = "https://www.runscope.com"
         return resp
 
 

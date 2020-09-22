@@ -93,7 +93,6 @@ class Request(object):
             if self.raw and len(self.raw) > self.max_raw_size:
                 self.raw = self.raw[0:self.max_raw_size]
 
-
     def to_dict(self):
         return dict(
             id=self.id,

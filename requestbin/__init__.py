@@ -53,7 +53,7 @@ if config.BUGSNAG_KEY:
         api_key=config.BUGSNAG_KEY,
         project_root=app.root_path,
         # 'production' is a magic string for bugsnag, rest are arbitrary
-        release_stage=config.REALM.replace("prod", "production"),
+        release_stage=config.REALM,
         notify_release_stages=["production", "test"],
         use_ssl=True
     )
