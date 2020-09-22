@@ -1,12 +1,12 @@
 version: "3.8"
 services:
     app:
-        build: .
+        image: siteworxpro/requestbin:latest
         environment:
             ENABLE_CORS: 1
             REDIS_HOST: "redis"
             ROOT_URL: "http://localhost:8000"
-            SESSION_SECRET_KEY: 'N1BKhJLnBqLpexOZdklsfDKFJDKFadsfs9a3r324YB7B73AglRmrHMDQ9RhXz35' # create a new one
+            SESSION_SECRET_KEY: '33W7JxP8h0qp12imYkn153pzuniAJOyfylzNxkRHP0xENafLOvuE9Bbakwc9n0pe' # change me
         links:
             - redis
         ports:
